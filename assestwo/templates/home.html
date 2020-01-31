@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<head>
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css"
+        integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>ASsessment two</title>
+</head>
+
+<body>
+    <h1>Wacky Widget</h1>
+    {% if not widgets %}
+    <h2>You have no widgets</h2>
+    <hr>
+    {% else %}
+    <table class="pure-table pure-table-bordered">
+        <thead>
+            <tr>
+                <th>Decription</th>
+                <th>Quantity</th>
+                <th>Delete</th>
+            </tr>
+
+
+        </thead>
+        {% for widget in widgets %}
+        <tr>
+            <td>{{ widget.description }}</td>
+            <td>{{ widget.quantity }}</td>
+            <td><a href="{% url 'delete_widget' widget.id %}">delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <hr>
+    {% endif %}
+    <h2>Add Widget</h2>
+    <form class="pure-form" action="{% url 'add_widget' %}" method="POST">
+        {% csrf_token %}
+        {{ widget_form.as_p }}
+        <button class="pure-button pure-button-active">Add Widget</button>
+    </form>
+</body>
+
+</html>
